@@ -60,35 +60,18 @@ public class Game {
 
     private void direction(Scene scene) {
         scene.setOnKeyPressed(keyEvent -> {
-            switch (keyEvent.getCode()) {
-                case UP:
-                    if (head.getDirection() != DOWN)
-                        head.setDirection(UP);
-                    play();
-                    break;
-                case DOWN:
-                    if (head.getDirection() != UP)
-                        head.setDirection(DOWN);
-                    play();
-                    break;
-                case LEFT:
-                    if (head.getDirection() != RIGHT)
-                        head.setDirection(LEFT);
-                    play();
-                    break;
-                case RIGHT:
-                    if (head.getDirection() != LEFT)
-                        head.setDirection(RIGHT);
-                    play();
-                    break;
+            if (canGoThisDirection(keyEvent.getCode())){
+                head.setDirection(keyEvent.getCode());
+                play();
             }
         });
     }
 
     private Timeline snakeMoveTimeLine(GridPane gridPane) {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
-            int x = head.getBoardX() + moveInDirectionHorizontally(head.getDirection());
-            int y = head.getBoardY() + moveInDirectionVertically(head.getDirection());
+            KeyCode direction = head.getDirection();
+            int x = head.getBoardX() + moveInDirectionHorizontally(direction);
+            int y = head.getBoardY() + moveInDirectionVertically(direction);
             if (collisionWithSnakeOrBorder(x, y))
                 stop();
             else {
@@ -98,7 +81,7 @@ public class Game {
                 tail.setBoardX(x);
                 tail.setBoardY(y);
                 PLACES[x][y] += 0b1;
-                tail.setDirection(head.getDirection());
+                tail.setDirection(direction);
                 head.setFather(tail);
                 head = tail;
                 tail = tail.getFather();
@@ -173,5 +156,27 @@ public class Game {
     private void stop() {
         TIME_LINE.stop();
         new MainPage(STAGE);
+    }
+
+    private boolean canGoThisDirection(KeyCode direction) {
+        int x = head.getBoardX();
+        int y = head.getBoardY();
+        switch (direction) {
+            case UP:
+                if (y > 0)
+                    return (PLACES[x][y - 1] & 0b1) == 0;
+            case DOWN:
+                if (y < 35)
+                    return (PLACES[x][y + 1] & 0b1) == 0;
+            case LEFT:
+                if (x > 0)
+                    return (PLACES[x - 1][y] &0b1) ==0;
+            case RIGHT:
+                if (x < 63)
+                    return (PLACES[x + 1][y] & 0b1) == 0;
+            return true;
+            default:
+                return false;
+        }
     }
 }
