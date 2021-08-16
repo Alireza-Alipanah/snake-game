@@ -10,7 +10,7 @@ public class Start extends Application {
     @Override
     public void start(Stage stage) {
         new MainPage(stage);
-        stage.getIcons().add(new Image("sss.png"));
+        stage.getIcons().add(new Image("snake.png"));
         stage.show();
     }
 
