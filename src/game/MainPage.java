@@ -30,11 +30,15 @@ public class MainPage {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
         Button button = new Button();
-        button.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+        Background greenBackground = new Background(new BackgroundFill(Color.GREEN, null, null));
+        Background limeBackground = new Background(new BackgroundFill(Color.LIME, null, null));
+        button.setBackground(greenBackground);
         button.setText("Play");
         button.setAlignment(Pos.CENTER);
         button.setFont(new Font(24));
         button.setTextFill(Color.BLACK);
+        button.setOnMouseEntered(e -> button.setBackground(limeBackground));
+        button.setOnMouseExited(e -> button.setBackground(greenBackground));
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(label, button);
