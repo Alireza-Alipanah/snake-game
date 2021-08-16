@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,8 +38,6 @@ public class MainPage {
         button.setAlignment(Pos.CENTER);
         button.setFont(new Font(24));
         button.setTextFill(Color.BLACK);
-        button.setOnMouseEntered(e -> button.setBackground(limeBackground));
-        button.setOnMouseExited(e -> button.setBackground(greenBackground));
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(label, button);
@@ -53,6 +52,14 @@ public class MainPage {
             new Game(stage);
         });
         Scene scene = new Scene(vBox);
+        button.setOnMouseEntered(e -> {
+            button.setBackground(limeBackground);
+            scene.setCursor(Cursor.HAND);
+        });
+        button.setOnMouseExited(e -> {
+            button.setBackground(greenBackground);
+            scene.setCursor(Cursor.DEFAULT);
+        });
         stage.setScene(scene);
     }
 }
