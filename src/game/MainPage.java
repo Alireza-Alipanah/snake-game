@@ -3,25 +3,22 @@ package game;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainPage {
 
-    private Scene scene;
-
-    public MainPage() {
+    public MainPage(Stage stage) {
         Label label = new Label();
         label.setAlignment(Pos.CENTER);
         label.setText("SNAKE!!");
@@ -47,10 +44,11 @@ public class MainPage {
         BackgroundFill backgroundFill = new BackgroundFill(paint, null, null);
         Background background = new Background(backgroundFill);
         vBox.setBackground(background);
-        this.scene = new Scene(vBox);
-    }
-
-    public Scene getScene() {
-        return scene;
+        button.setOnMouseClicked(e -> {
+            timeline.stop();
+            new Game(stage);
+        });
+        Scene scene = new Scene(vBox);
+        stage.setScene(scene);
     }
 }

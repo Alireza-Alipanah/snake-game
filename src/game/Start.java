@@ -1,18 +1,16 @@
 package game;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Start extends Application {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
-        stage.setWidth(1280);
-        stage.setHeight(720);
-        stage.setResizable(false);
-        MainPage mainPage = new MainPage();
-        stage.setScene(mainPage.getScene());
+    public void start(Stage stage) {
+        new MainPage(stage);
+        stage.getIcons().add(new Image("sss.png"));
         stage.show();
     }
 
